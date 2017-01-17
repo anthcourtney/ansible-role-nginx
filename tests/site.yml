@@ -1,0 +1,11 @@
+---
+
+- name: Setup environment
+  hosts: all
+  become: true
+
+  roles:
+    - nginx
+
+- include: test.yml
+  when: run_tests|default() | bool

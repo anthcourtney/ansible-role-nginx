@@ -1,0 +1,12 @@
+---
+
+nginx_conf_file:
+nginx_conf_template:
+
+nginx_conf_dest: "/etc/nginx/nginx.conf"
+
+nginx_conf_d_files: {}
+nginx_conf_d_templates: {}
+
+nginx_htpasswd_file: "/etc/nginx/conf/htpasswd"
+nginx_htpasswd_users: {}

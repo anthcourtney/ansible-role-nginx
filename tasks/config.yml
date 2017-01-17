@@ -1,0 +1,45 @@
+---
+
+- name: Copy nginx configuration file
+  copy:
+    src: "{{ nginx_conf_file }}"
+    dest: "{{ nginx_conf_dest }}"
+    validate: "nginx -t -c %s"
+  when: nginx_conf_file is defined and nginx_conf_file != None
+  notify: Restart nginx
+  tags:
+    - nginx
+    - nginx-config
+
+- name: Copy nginx conf.d files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  when: item.src is defined and item.dest is defined
+  with_items: "{{ nginx_conf_d_files }}"
+  notify: Restart nginx
+  tags:
+    - nginx
+    - nginx-config
+
+- name: Copy nginx configuration template
+  template:
+    src: "{{ nginx_conf_template }}"
+    dest: "{{ nginx_conf_dest }}"
+    validate: "nginx -t -c %s"
+  when: nginx_conf_template is defined and nginx_conf_template != None
+  notify: Restart nginx
+  tags:
+    - nginx
+    - nginx-config
+
+- name: Copy nginx conf.d templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  when: item.src is defined and item.dest is defined
+  with_items: "{{ nginx_conf_d_templates }}"
+  notify: Restart nginx
+  tags:
+    - nginx
+    - nginx-config

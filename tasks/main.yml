@@ -1,5 +1,15 @@
 ---
 
+- include: check-version.yml
+
+- name: Install epel repository
+  package:
+    name: epel-release
+    state: present
+  tags:
+    - nginx
+    - nginx-install
+
 - name: Install nginx
   package:
     name: nginx
@@ -8,7 +18,7 @@
     - nginx
     - nginx-install
 
-- name: Ensure nginx is running
+- name: Ensure nginx is started
   service:
     name: nginx
     state: started
@@ -16,3 +26,7 @@
   tags:
     - nginx
     - nginx-service
+
+- include: config.yml
+- include: htpasswd.yml
+- include: monit.yml

@@ -1,0 +1,16 @@
+---
+
+- name: Run functional tests
+  hosts: all
+  become: true
+
+  tasks:
+
+  - name: Test that we can access index page
+    uri:
+      url: "http://localhost"
+      method: GET
+      status_code: 200
+    changed_when: false
+    tags:
+      - functional-tests

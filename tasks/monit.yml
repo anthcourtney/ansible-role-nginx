@@ -1,0 +1,20 @@
+---
+
+- name: Check if monit has been installed
+  stat:
+    path: /bin/monit
+  register: monit
+  changed_when: false
+  tags:
+    - nginx
+    - nginx-monit
+
+- name: Copy monit nginx configuration
+  copy:
+    src: etc/monit.d/nginx.conf
+    dest: /etc/monit.d/nginx.conf
+  notify: Reload monit
+  when: monit.stat.exists
+  tags:
+    - nginx
+    - nginx-monit
